@@ -33,21 +33,19 @@
     </nav>
 
     <!-- Contenido principal -->
-    <script src="./js/inicio.js"></script>
     <main>
         <!-- Filtro -->
         <div class="filter">
-            <select id="filtrar">
+            <select id="ordenar">
                 <option value="">Filtrar por --- </option>
-                <option value="vote">vote average</option>
+                <option value="vote_average">vote average</option>
                 <option value="popularity">popularity</option>
-                <option value="ReleasDate">Releas date</option>
+                <option value="release_date">release date</option>
             </select>
         </div>
 
         <!-- Grid de películas -->
         <article class="movie-grid">
-            <script> generarTarjetas(allPelis); </script>
         </article>
     </main>
 
@@ -58,6 +56,6 @@
         <a href="./views/nosotros.html">Nosotros</a>
         <a href="https://github.com/AMRayoub97" target="_blank">GitHub</a>
     </footer>
-    
+    <script src="./js/inicio.js"></script>
 </body>
 </html>

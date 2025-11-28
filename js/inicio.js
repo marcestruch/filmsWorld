@@ -1,6 +1,7 @@
 (() => {
     const apiKey = "013abb2fee899b7766b393fb002529dc";
     const totalPages = 5;
+    let allPelis = [];
 
     async function fetchAllMovies() {
         let movies = [];
@@ -12,12 +13,12 @@
         return movies;
     }
 
-    function generarTarjetas(allPelis) {
+    function generarTarjetas(pelis) {
         const movieGrid = document.querySelector('.movie-grid');
         movieGrid.innerHTML = '';
 
-        allPelis.forEach(peli => {
-            const { title, overview, backdrop_path,popularity,release_date,vote_average } = peli;
+        pelis.forEach(peli => {
+            const { title, overview, backdrop_path, popularity, release_date, vote_average } = peli;
 
             const newDiv = document.createElement('div');
             newDiv.className = "movie-card";
@@ -38,15 +39,15 @@
             newDivContent.appendChild(descripcion);
 
             const popu = document.createElement('p');
-            popu.textContent ="Popularity:" + (popularity ? popularity : 0);
+            popu.textContent = "Popularity: " + (popularity ? popularity : 0);
             newDivContent.appendChild(popu);
 
             const releaseDate = document.createElement('p');
-            releaseDate.textContent ="Releas date:" + (release_date ? release_date : '0000-00-00');
+            releaseDate.textContent = "Release date: " + (release_date ? release_date : '0000-00-00');
             newDivContent.appendChild(releaseDate);
 
             const voteAverage = document.createElement('p');
-            voteAverage.textContent = "vote average:" + (vote_average ? vote_average : '0');
+            voteAverage.textContent = "Vote average: " + (vote_average ? vote_average : '0');
             newDivContent.appendChild(voteAverage);
 
             newDiv.appendChild(newDivContent);
@@ -55,10 +56,27 @@
     }
 
     async function init() {
-        const allPelis = await fetchAllMovies();
+        allPelis = await fetchAllMovies();
         generarTarjetas(allPelis);
     }
 
     init();
+
+    const ordenarSelect = document.getElementById('ordenar');
+    ordenarSelect.addEventListener('change', () => {
+        const ordenar = ordenarSelect.value;
+
+        if (ordenar && allPelis.length) {
+            let pelisOrdenadas = [...allPelis];
+
+            if (ordenar === "release_date") {
+                pelisOrdenadas.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+            } else {
+                pelisOrdenadas.sort((a, b) => (b[ordenar] || 0) - (a[ordenar] || 0));
+            }
+
+            generarTarjetas(pelisOrdenadas);
+        }
+    });
 
 })();
