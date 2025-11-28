@@ -3,6 +3,7 @@
     const totalPages = 5;
     let allPelis = [];
 
+    //fetch pelis desde API
     async function fetchAllMovies() {
         let movies = [];
         for (let page = 1; page <= totalPages; page++) {
@@ -13,6 +14,7 @@
         return movies;
     }
 
+    //metodo para generar tarjetas de peliculas
     function generarTarjetas(pelis) {
         const movieGrid = document.querySelector('.movie-grid');
         movieGrid.innerHTML = '';
@@ -55,6 +57,7 @@
         });
     }
 
+    //generar tarjetas
     async function init() {
         allPelis = await fetchAllMovies();
         generarTarjetas(allPelis);
@@ -62,6 +65,7 @@
 
     init();
 
+    //ordenar
     const ordenarSelect = document.getElementById('ordenar');
     ordenarSelect.addEventListener('change', () => {
         const ordenar = ordenarSelect.value;
@@ -79,8 +83,8 @@
         }
     });
 
+    //buscar 
     const buscarBtn = document.getElementById("buscarBtn");
-
     buscarBtn.addEventListener('click', () => {
         const inputBuscar = document.getElementById("inputBuscar").value.trim().toLowerCase();
 
